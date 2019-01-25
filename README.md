@@ -4,7 +4,7 @@ Hello! This challenge is to build a simple little React app that displays top ne
 
 # General Guidelines:
 - This challenge is timeboxed to three hours. We understand this is an ambitious undertaking and that this may not be enough time to complete the entire feature set--just get as far as you can. Make sure to leave enough time to commit and push your work.
-- This repo was built off of create-react-app and has some basic configuration and setup to get you up and running quickly. To get started, just fork the repo.
+- This repo was built off of create-react-app and has some basic configuration and setup to get you up and running quickly. To get started, just fork the repo, run `yarn`, and hack away.
 - Your project should be shared via either Github or Bitbucket. Please include a README.md and setup script or instructions sufficient to allow us to run your app locally.
 
 # Other Considerations
