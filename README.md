@@ -23,7 +23,7 @@ Hello! This challenge is to build a simple little React app that displays top ne
 		- Section options can be found in the API documentation.
 	- After searching, a user should see a list of the first 30 Top Stories results.
 	- A user should be able to see the title, abstract, byline, and thumbnail image of each top story.
-	- A user should be able to click on the title of each top story to open (link to) the actual NYTimes article in another browser tab.
+	- A user should be able to click on the title of each story to open (link to) the actual NYTimes article in another browser tab.
 4. Implement a Top Stories text filter
 	- A user should be able to filter their Top Stories results with text that they input.
-		- The filter text should at least match against the top story title, but could match on additional top story attributes too.
+		- The filter text should at least match against the story title, but could match on additional top story attributes too.
