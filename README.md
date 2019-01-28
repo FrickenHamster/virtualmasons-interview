@@ -34,4 +34,4 @@ Hello! This challenge is to build a simple little React app that displays top ne
 - Data Flow: Is it easy to reason about the flow and state of data? Does the handling of data manage complexity?
 - Code Cleanliness & Quality: Is the code clean, consistent, and maintainable? Is it characteristic of idiomatic React and Javascript?
 - Technical Choices: Do the choices of any additional libraries or packages seem reasonable and appropriate?
-- Correctness: Is the code pushed to a repository and include the directions to run the app locally? Does the README communicate any gaps in implementation? 
+- Correctness: Is the implementation in line with the prompt? Is the code pushed to a repository and are there directions on how to run the app locally? Does the README communicate any gaps in implementation? 
