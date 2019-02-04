@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Input } from 'reactstrap';
+
 
 import { NYT_API_KEY } from "../config/ApiKeys";
 import ArticleList from "./ArticleList";
@@ -41,10 +43,13 @@ export default class NYTTracker extends Component {
 		super(props);
 		this.state = {
 			data: [],
+			displayData: [],
 			section: 'home',
+			filter: '',
 		};
 
 		this.handleSectionSelect = this.handleSectionSelect.bind(this);
+		this.handleFilterChange = this.handleFilterChange.bind(this);
 	}
 
 	componentDidMount() {
@@ -77,13 +82,26 @@ export default class NYTTracker extends Component {
 						url: item.short_url ? item.short_url : item.url,
 					}
 				});
-				this.setState({data});
+				this.setState({data}, () => this.refreshFilteredData());
 			});
 	}
 
 	handleSectionSelect(value) {
-		this.setState({section: value});
-		this.fetchStories();
+		this.setState({section: value}, () => this.fetchStories());
+	}
+
+	handleFilterChange(e) {
+		const filter = e.target.value;
+		
+		this.setState({filter}, () => this.refreshFilteredData());
+	}
+	
+	refreshFilteredData() {
+		const ff = this.state.filter.toUpperCase();
+		const displayData = this.state.data.filter(item => {
+			return (item.title.toUpperCase().includes(ff) || item.abstract.includes(ff) || item.byline.includes(ff))
+		});
+		this.setState({displayData});
 	}
 
 	render() {
@@ -94,7 +112,9 @@ export default class NYTTracker extends Component {
 				selected={this.state.section}
 				onSelect={this.handleSectionSelect}
 			/>
-			<ArticleList articles={this.state.data}/>
+			<Input placeholder="filter" onChange={this.handleFilterChange}/>
+
+			<ArticleList articles={this.state.displayData}/>
 		</div>);
 	}
 }
