@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Input } from 'reactstrap';
-
+import { Alert, Input } from 'reactstrap';
+import { debounce } from 'debounce';
 
 import { NYT_API_KEY } from "../config/ApiKeys";
 import ArticleList from "./ArticleList";
@@ -48,10 +48,14 @@ export default class NYTTracker extends Component {
 			displayData: [],
 			section: 'home',
 			filter: '',
+			alertMessage: '',
+			showAlert: false,
 		};
 
 		this.handleSectionSelect = this.handleSectionSelect.bind(this);
 		this.handleFilterChange = this.handleFilterChange.bind(this);
+		this.handleToggleAlert = this.handleToggleAlert.bind(this);
+		this.requestFetchStories = debounce(this.fetchStories, 500);
 	}
 
 	componentDidMount() {
@@ -62,6 +66,14 @@ export default class NYTTracker extends Component {
 		fetch(`https://api.nytimes.com/svc/topstories/v2/${this.state.section}.json?api-key=${NYT_API_KEY}`)
 			.then(response => response.json())
 			.then(json => {
+				if (json.fault) {
+					if (json.fault.faultstring === "Invalid ApiKey")
+						this.showError('Invalid ApiKey. Please make sure you set up the project with a valid api key');
+					else
+						this.showError("Error getting articles. Please try again");
+					return;
+				}
+				
 				const data = json.results.map(item => {
 					let tbUrl;
 					for (const mm of item.multimedia) {
@@ -88,14 +100,22 @@ export default class NYTTracker extends Component {
 			});
 	}
 
+	showError(message) {
+		this.setState({showAlert: true, alertMessage: message});
+	}
+
 	handleSectionSelect(value) {
-		this.setState({section: value}, () => this.fetchStories());
+		this.setState({section: value}, () => this.requestFetchStories());
 	}
 
 	handleFilterChange(e) {
 		const filter = e.target.value;
 		
 		this.setState({filter}, () => this.refreshFilteredData());
+	}
+	
+	handleToggleAlert() {
+		this.setState({showAlert: false});
 	}
 	
 	refreshFilteredData() {
@@ -109,7 +129,9 @@ export default class NYTTracker extends Component {
 	render() {
 		return (<div className="mt-5">
 			<h1>New York Times Top Stories</h1>
-			
+			<Alert color="danger" isOpen={this.state.showAlert} toggle={this.handleToggleAlert} >
+				{this.state.alertMessage}
+			</Alert>
 			<div className="filters-group">
 			<SectionSelector
 				sections={NYT_SECTIONS}
