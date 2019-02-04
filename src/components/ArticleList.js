@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Col, ListGroup, ListGroupItem, Row } from 'reactstrap';
+import noImage from '../assets/images/no_image.png';
 
 import './ArticleList.css';
 
 const ArticleItem = ({item}) => {
 	return (<ListGroupItem className="mb-2">
-		<h4><a href={item.url} target="_blank">{item.title}</a></h4>
+		<h4><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}</a></h4>
 		<Row>
 			<Col sm="3" m="1">
-				<img src={item.tbUrl} className="articleItem-image"/>
+				<img src={item.tbUrl ? item.tbUrl : noImage} alt="Article Thumbnail" className="articleItem-image"/>
 			</Col>
 			<Col sm="9" m="11">
 				<h6>{item.abstract}</h6>

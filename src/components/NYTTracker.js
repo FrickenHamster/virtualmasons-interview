@@ -54,6 +54,7 @@ export default class NYTTracker extends Component {
 		this.handleSectionSelect = this.handleSectionSelect.bind(this);
 		this.handleFilterChange = this.handleFilterChange.bind(this);
 		this.handleToggleAlert = this.handleToggleAlert.bind(this);
+		//debounce api requests to prevent limiting
 		this.requestFetchStories = debounce(this.fetchStories, 500);
 	}
 
