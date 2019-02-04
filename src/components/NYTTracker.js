@@ -2,19 +2,57 @@ import React, { Component } from 'react';
 
 import { NYT_API_KEY } from "../config/ApiKeys";
 import ArticleList from "./ArticleList";
+import SectionSelector from "./SectionSelector";
 
+
+const NYT_SECTIONS = {
+	home: 'Home',
+	arts: 'Arts',
+	automobiles: 'Automobiles',
+	books: 'Books',
+	business: 'Business',
+	/*fashion,
+	food,
+	health,
+	home,
+	insider,
+	magazine,
+	movies,
+	national,
+	nyregion,
+	obituaries,
+	opinion,
+	politics,
+	realestate,
+	science,
+	sports,
+	sundayreview,
+	technology,
+	theater,
+	tmagazine,
+	travel,
+	upshot,
+	world*/
+};
 
 export default class NYTTracker extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: []
+			data: [],
+			section: 'home',
 		};
+
+		this.handleSectionSelect = this.handleSectionSelect.bind(this);
 	}
-	
+
 	componentDidMount() {
-		fetch(`https://api.nytimes.com/svc/topstories/v2/home.json?api-key=${NYT_API_KEY}`)
+		this.fetchStories();
+	}
+
+	fetchStories() {
+		fetch(`https://api.nytimes.com/svc/topstories/v2/${this.state.section}.json?api-key=${NYT_API_KEY}`)
 			.then(response => response.json())
 			.then(json => {
 				const data = json.results.map(item => {
@@ -42,10 +80,20 @@ export default class NYTTracker extends Component {
 				this.setState({data});
 			});
 	}
-	
+
+	handleSectionSelect(value) {
+		this.setState({section: value});
+		this.fetchStories();
+	}
+
 	render() {
 		return (<div>
 			<h1>New York Times Top Stories</h1>
+			<SectionSelector
+				sections={NYT_SECTIONS}
+				selected={this.state.section}
+				onSelect={this.handleSectionSelect}
+			/>
 			<ArticleList articles={this.state.data}/>
 		</div>);
 	}
