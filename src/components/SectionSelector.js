@@ -42,10 +42,11 @@ export default class SectionSelector extends Component {
 				title={title}
 				value={key}
 				active={key === this.props.selected}
-				onClick={this.handleOptionClick}/>)
+				onClick={this.handleOptionClick}
+			/>)
 		}
 
-		return (<Dropdown isOpen={this.state.open} toggle={this.handleToggle}>
+		return (<Dropdown isOpen={this.state.open} toggle={this.handleToggle} className="mb-3"> 
 			<DropdownToggle caret>
 				Section: {this.props.sections[this.props.selected]}
 			</DropdownToggle>

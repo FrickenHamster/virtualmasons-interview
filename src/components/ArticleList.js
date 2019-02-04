@@ -2,14 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Col, ListGroup, ListGroupItem, Row } from 'reactstrap';
 
+import './ArticleList.css';
+
 const ArticleItem = ({item}) => {
-	return (<ListGroupItem>
+	return (<ListGroupItem className="mb-2">
 		<h4><a href={item.url} target="_blank">{item.title}</a></h4>
 		<Row>
-			<Col xs="4" s="2" m="1">
-				<img src={item.tbUrl} style={{maxWidth: '100%', maxHeight: '100%', margin: 'auto'}}/>
+			<Col sm="3" m="1">
+				<img src={item.tbUrl} className="articleItem-image"/>
 			</Col>
-			<Col xs="8" s="10" m="11">
+			<Col sm="9" m="11">
 				<h6>{item.abstract}</h6>
 				<div>{item.byline}</div>
 			</Col>

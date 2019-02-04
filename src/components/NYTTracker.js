@@ -7,6 +7,8 @@ import ArticleList from "./ArticleList";
 import SectionSelector from "./SectionSelector";
 
 
+import './NYTTracker.css';
+
 const NYT_SECTIONS = {
 	home: 'Home',
 	arts: 'Arts',
@@ -105,15 +107,18 @@ export default class NYTTracker extends Component {
 	}
 
 	render() {
-		return (<div>
+		return (<div className="mt-5">
 			<h1>New York Times Top Stories</h1>
+			
+			<div className="filters-group">
 			<SectionSelector
 				sections={NYT_SECTIONS}
 				selected={this.state.section}
 				onSelect={this.handleSectionSelect}
 			/>
 			<Input placeholder="filter" onChange={this.handleFilterChange}/>
-
+			</div>
+				
 			<ArticleList articles={this.state.displayData}/>
 		</div>);
 	}
